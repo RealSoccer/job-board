@@ -1,0 +1,128 @@
+<div class="row-fluid">
+	<div class="span8">
+		<div id="new-job-post" class="form">
+			<p class="ft22">Basic info</p>
+			<div class="field">
+				<%= f.label :title, t("job.title") %>
+				<%= f.text_field :title, :class => "text", required: false %>
+			</div>
+			
+			<div class="field">
+				<%= f.label :location, t("job.location") %>
+				<%= f.text_field :location, :class => "text", required: false %>
+			</div>
+
+			<div class="field">
+				<%= f.label :tech_skills, 'Key Technologies' %>
+			  <%= select_tag :tech_skills, options_for_select(Job::TAGS.map.with_index { |m, i| [m, i] }) %>
+			  <%= f.hidden_field :tags %>
+		  	<div class="blog-item">
+					<span class="pull-left">Examples: &nbsp;</span>		  		
+	       	<ul class="dark-tags pull-left">
+	        	<li>Java</li>
+	        	<li>C++</li>
+	        	<li>Titanium</li>
+	        	<li>C#</li>
+	        </ul>
+	      </div>
+			</div>
+
+			<div class="field">
+			<%= f.label :job_type, t("job.type") %>
+		  <%= f.select :job_type, options_for_select(Job::JOB_TYPE.map.with_index { |m, i| [m, i] }) %>
+			</div>
+
+			<hr>
+			<p class="ft22">About your company</p>
+
+			<div class="field">
+				<%= f.label :company_name, t("job.company_name") %>
+				<%= f.text_field :company_name, :class => "text", required: false %>
+			</div>
+
+			<div class="field">	
+				<%= f.label :logo, "Logo" %>
+		    <div class="input-append">
+			    <input class="span7" id="logo" type="text" placeholder="No file selected">
+			    <button class="btn" type="button" onclick="$('#job_company_logo').click();">Choose File</button>
+		    </div>
+		    <div id="file-load-result" class="pull-right" style="font-weight: bold; margin-top: 5px;">
+		    	
+		    </div>
+
+				<%= f.file_field :company_logo, :class => "text hide", :placeholder => "No file selected"%>
+			</div>
+
+			<div class="field">
+				<%= f.label :url, "URL" %>
+				<%= f.text_field :url, :class => "text", required: false %>
+			</div>
+
+			<hr>
+			<p class="ft22">About your job</p>		
+			<div class="row-fluid">
+				<h5>Description</h5>
+				<%= f.hidden_field :description, :class => "text" %>
+				<div class="widget-box">
+					<div class="widget-header widget-header-small">
+						
+					</div>
+
+					<div class="widget-body">
+						<div class="widget-main no-padding">
+							<div class="wysiwyg-editor span11" id="input-description-div">
+								<%= @job.description.html_safe unless @job.description.nil? %>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="row-fluid">
+				<h5>How do people apply for this job</h5>
+				<p class="gray">
+					Example: Send resume to Jon@company.com or Apply at http://company.com/jobs
+				</p>
+				<%= f.text_area :apply_information, :class => "text", required: false %>
+			</div>
+		</div> <!-- #new-job-post div end -->
+	</div><!-- span8 end -->
+</div><!-- row-fluid end -->
+
+<div class="row-fluid">
+	<hr>
+	<br>
+	<h3>Get More Applicants</h3>
+	<div class="span7">
+		<br>
+		<p style="line-height: 25px; font-size: 16px;">
+			For only $50 you can have your job posting highlighted.<br>
+			Highlighted ads are light blue, and stand out from other similar postings. Highlighted jobs tend to get 50% more views
+		</p>
+		<br>
+		<label for="job_highlighted1">
+			<%= f.check_box :highlighted1 %>
+			<strong>Yes, highlight my ad</strong> for only $50.
+		</label>
+		<br>
+		<p style="line-height: 25px; font-size: 16px;">
+			Sometimes exposure is the key to a successful job search. Have @apptopia tweet out your job to its over 13,000 mobile focused followers. Tweeted jobs tend to get a quick spike of at least ~100 views.
+		</p>
+		<br>
+		<label for="job_highlighted2">
+			<%= f.check_box :highlighted2 %>
+			<strong>Yes, tweet my job posting</strong> for only $30
+		</label>
+	</div><!-- Highlight guide -->
+	<div class="span5 pull-right">
+		<img src="/assets/highlight-guide.jpg" />
+	</div><!-- Hightlight Image Image Area -->
+</div>
+<div class="row-fluid">
+	<br><br>
+	<div style="clear: both;">
+		<button type="submit" class="btn-u btn-lightblue btn-medium">
+			Continue to step 2 to preview your job posting
+		</button>
+	</div>
+</div>

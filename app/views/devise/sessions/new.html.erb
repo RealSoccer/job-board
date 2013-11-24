@@ -1,0 +1,28 @@
+<div style="width: 1150px;">
+  <div style="width: 600px; float:none; margin: 0px auto;">
+    <h2 class="pagetitle">Sign in</h2>
+    	
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {class: "form-horizontal"}) do |f| %>
+      <div class="control-group">
+        <%= f.label :email, 'Email', :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :email, required: true %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :password, 'Password', :class => 'control-label' %>
+        <div class="controls">
+          <%= f.password_field :password, required: true %>
+        </div>
+      </div>
+
+      <div class="controls">
+    	<%= f.submit "Sign in", :class => "btn" %>
+      </div>
+    <% end %>
+  <p>
+  <%#= render :partial => "devise/shared/links" %>
+  </p>
+  </div>
+</div>

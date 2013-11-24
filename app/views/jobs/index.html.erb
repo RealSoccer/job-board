@@ -1,0 +1,81 @@
+<%= form_tag jobs_path, :id => "search-form", remote: true, :class => "navbar-search", :method => :get do %>
+<div class="left-main-div">
+	<div class="row-fluid">
+		<div class="span6">
+			<strong style="font-size: 26px;" id="jobs-count">
+				<%= @jobs.length %> Jobs for developers
+			</strong>
+			<p class="gray">Latest post about <%= Job.last.elapsed if Job.all.present? %> ago</p>
+		</div>
+		
+		<div id="sort-div" class="span3 pull-right">
+			<br>
+      <%= select_tag :order_by, 
+        options_for_select(Job::SEARCH_TERMS.map.with_index{|i, m| [i, m]}, session[:order_by]), class: "selectpicker pull-right", data: {width: "150px"} %>
+		</div>
+	</div>
+  <div id="job-list">
+	<% @jobs.each_with_index do |job, i| %>
+		<div class="row-fluid <%= 'highlighted' if job.highlighted == true %>">
+			<div class="new-tag pull-left">
+				<%= link_to 'NEW', '', :class => 'btn btn-u-mini' if job.elapsed_date < 6%>
+			</div>
+      <div class="span11 booking-blocks">
+        <div style="overflow:hidden;">
+        	<h4>
+        		<%= link_to job.title, job_path(job), :style => 'float: left;' %>
+        		<span class="hour pull-right light-gray"><%= job.elapsed %> ago</span>
+        	</h4>
+        	<br>
+          <h5>
+          	<strong><%= job.company_name %> - </strong>
+          	<normal><%= job.location %></normal>
+          </h5>
+          <% description = strip_tags(job.description) %>
+          <span class="light-gray ellipsis"><%= description%></span>
+        </div>
+        <div class="pull-left">
+         	<ul class="inline blog-tags pull-left">
+          	<%= show_tags(job) %>
+          </ul>
+        </div>
+      </div>
+    </div><!-- Row Fliud for each Job-->
+    <%= "<hr>".html_safe if i != @jobs.length-1 %>
+  <% end %>
+  </div><!-- Job List Pane -->
+</div><!-- Main content div -->
+<div class="sidebar">
+  <br>
+  <a href="<%= new_job_path %>" class="btn-u post-job-btn">
+    POST A JOB - <span style="font-size: 13px;">250$ for 30 days</span></a>
+  <%= render :partial => "common/search_form" %>
+</div><!-- Right Side Bar -->
+<% end %>
+
+
+<!-- Template Job Row -->
+<div id="job-row-template" class="row-fluid" style="display: none;">
+  <div class="new-tag pull-left">
+    <a id="new-tag" class="btn btn-u-mini" href="">NEW</a>
+  </div>
+  <div class="span11">
+    <div style="overflow:hidden;">
+      <h4>
+        <a id="title" style="float: left;" href="/jobs/3-ios-social-media-app-silverbiz"></a>
+        <span id="elapsed" class="hour pull-right light-gray"></span>
+      </h4>
+      <br>
+      <h5>
+        <strong id="company_name"></strong>
+        <normal id="location"></normal>
+      </h5>
+      <span class="light-gray ellipsis" id="description"></span>
+    </div>
+    <div class="pull-left">
+      <ul class="inline blog-tags pull-left" id="tags">
+        <li><a class="tech_tag" href="#">c#</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

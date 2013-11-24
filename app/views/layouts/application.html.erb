@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <%= render_page_title_tag %>
+  <%= render_page_description_meta_tag %>
+  <%= render_page_keywords_meta_tag %>
+  <%= render_page_image_link_tag %>
+
+  <meta property="og:title" content="<%= page_title || SeoHelper.configuration.site_name %>"/>
+  <meta property="og:description" content="<%= page_description || SeoHelper.configuration.default_page_description %>"/>
+  <meta property="og:image:url" content="<%= page_image || SeoHelper.configuration.default_page_image %>"/>
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  <%= stylesheet_link_tag "application" %>
+
+  <%= auto_discovery_link_tag(:rss, "http://feeds.feedburner.com/rubyjobs-taiwan", :title => "Ruby Jobs in Taiwan RSS feed") %>
+
+  <%= csrf_meta_tag %>
+  <%= javascript_include_tag "application" %>
+  <%= render :partial => "common/facebook_js" %>
+  <%= google_plusone_javascript_include_tag(:async => true) %>
+  <%= yield :scripts %>
+  <%= yield :head %>
+
+</head>
+<body>
+<div id="wrapper">
+    <div id="header">
+      <div class="row-fluid">
+        <div class="span5 pull-left">
+          <h1><a href="/">Job Board</a></h1>
+          <% if job_index_page %>
+            <br>
+          <% else %>
+            <a id="search-results-link" class="gray" href="/">
+              <img src="/assets/back-arrow.png"/>
+              Search results
+            </a>
+          <% end %>
+        </div>
+        <div class="right span5">
+            <p class="member">
+              <%= render :partial => "common/usernav" %>
+            </p>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+        <div id="container-inner">
+          <%= render_notice %>
+          <%= render_warning %>
+          <%= yield %>
+        </div>
+    </div>
+    <div id="footer">
+    </div>
+</div>
+
+<%= render :partial => "common/google_analytics" %>
+
+</body>
+</html>
